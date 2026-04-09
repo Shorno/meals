@@ -17,7 +17,7 @@ export default function Home() {
         <ShareSection />
         <DiscoverSection />
           <div>
-              hello
+              hello...
           </div>
       </main>
       <Footer />
