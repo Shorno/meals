@@ -16,6 +16,9 @@ export default function Home() {
         <RecentlyFeaturedSection />
         <ShareSection />
         <DiscoverSection />
+          <div>
+              hello
+          </div>
       </main>
       <Footer />
     </>
