@@ -1,10 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
+import { LogOut, User } from "lucide-react";
 
 export default function Navbar() {
+  const { data: session, isPending } = authClient.useSession();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+      },
+    });
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
@@ -60,17 +76,49 @@ export default function Navbar() {
             </svg>
           </div>
 
-          <Link href="/recipes/create">
-            <Button className="bg-pink-400 hover:bg-pink-500 text-white rounded-full px-6 h-9 text-sm font-medium shadow-none border-none">
-              Upload
-            </Button>
-          </Link>
-          <Button
-            variant="outline"
-            className="border-pink-400 text-pink-400 hover:bg-pink-50 hover:text-pink-500 rounded-full px-6 h-9 text-sm font-medium"
-          >
-            Register Now
-          </Button>
+          {!isPending && (
+            <>
+              {session ? (
+                <>
+                  <Link href="/recipes/create">
+                    <Button className="bg-pink-400 hover:bg-pink-500 text-white rounded-full px-6 h-9 text-sm font-medium shadow-none border-none">
+                      Upload
+                    </Button>
+                  </Link>
+                  <Link href="/profile" className="ml-2">
+                    <Button variant="ghost" className="text-gray-600 hover:text-pink-500 rounded-full px-4 h-9 text-sm font-medium">
+                      <User className="h-4 w-4 mr-2" />
+                      Profile
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outline"
+                    onClick={handleSignOut}
+                    className="border-gray-200 text-gray-600 hover:bg-red-50 hover:text-red-500 hover:border-red-200 rounded-full px-4 h-9 text-sm font-medium ml-2"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href="/sign-in">
+                    <Button variant="ghost" className="text-gray-600 hover:text-pink-500 rounded-full px-4 h-9 text-sm font-medium">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link href="/sign-up">
+                    <Button
+                      variant="outline"
+                      className="border-pink-400 text-pink-400 hover:bg-pink-50 hover:text-pink-500 rounded-full px-6 h-9 text-sm font-medium"
+                    >
+                      Register Now
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     </header>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Navbar from "@/components/navbar";
+
 import Footer from "@/components/footer";
 import RecipeForm, {
   type RecipeFormData,
@@ -31,7 +31,7 @@ export default function CreateRecipePage() {
 
   return (
     <>
-      <Navbar />
+
       <main className="flex-1 bg-gray-50/50">
         {/* Header */}
         <section className="bg-white border-b border-gray-100">

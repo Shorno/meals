@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/navbar";
+
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import RecipeCard, { type Recipe } from "@/components/recipes/recipe-card";
@@ -53,6 +53,7 @@ export default function RecipesPage() {
             imageUrl: r.imageUrl || "",
             tags: (r.tags as string[]) || [],
             createdAt: r.createdAt,
+            user: r.user,
           }))
         );
       } catch (error) {
@@ -118,7 +119,7 @@ export default function RecipesPage() {
 
   return (
     <>
-      <Navbar />
+
       <main className="flex-1 bg-gray-50/50">
         {/* Hero Header */}
         <section className="bg-white border-b border-gray-100">

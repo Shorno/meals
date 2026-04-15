@@ -45,6 +45,11 @@ export interface Recipe {
   imageUrl?: string;
   tags: string[];
   createdAt: string;
+  user?: {
+    id: string;
+    name: string;
+    image?: string | null;
+  };
 }
 
 interface RecipeCardProps {
@@ -116,6 +121,18 @@ export default function RecipeCard({ recipe, onEdit, onDelete }: RecipeCardProps
             </svg>
           </button>
         </div>
+
+        {/* Author badge overlay */}
+        {recipe.user && (
+          <div className="absolute bottom-3 left-3 flex items-center gap-2 bg-white/90 backdrop-blur-sm pr-3 pl-1 py-1 rounded-full shadow-sm">
+            <div className="w-5 h-5 rounded-full bg-pink-100 flex items-center justify-center text-[10px] font-bold text-pink-500 shadow-sm border border-pink-200">
+              {recipe.user.name.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-[10px] text-gray-700 font-semibold truncate max-w-[120px]">
+              {recipe.user.name}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content */}

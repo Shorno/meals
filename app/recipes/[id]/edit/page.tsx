@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import Navbar from "@/components/navbar";
+
 import Footer from "@/components/footer";
 import RecipeForm, {
   type RecipeFormData,
@@ -65,7 +65,7 @@ export default function EditRecipePage() {
   if (loading) {
     return (
       <>
-        <Navbar />
+
         <main className="flex-1 bg-gray-50/50">
           <div className="max-w-3xl mx-auto px-6 py-20 text-center">
             <div className="w-12 h-12 rounded-full border-4 border-amber-200 border-t-amber-400 animate-spin mx-auto mb-4" />
@@ -80,7 +80,7 @@ export default function EditRecipePage() {
   if (!recipeData) {
     return (
       <>
-        <Navbar />
+
         <main className="flex-1 bg-gray-50/50">
           <div className="max-w-3xl mx-auto px-6 py-20 text-center">
             <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
@@ -136,7 +136,7 @@ export default function EditRecipePage() {
 
   return (
     <>
-      <Navbar />
+
       <main className="flex-1 bg-gray-50/50">
         {/* Header */}
         <section className="bg-white border-b border-gray-100">
