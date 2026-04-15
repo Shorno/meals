@@ -1,6 +1,8 @@
 import { db } from "@/db/config";
 import { recipe, recipeIngredient, recipeStep } from "@/db/schema";
 import { desc } from "drizzle-orm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 // GET /api/recipes — List all recipes
 export async function GET() {
@@ -13,6 +15,7 @@ export async function GET() {
         steps: {
           orderBy: (steps, { asc }) => [asc(steps.sortOrder)],
         },
+        user: true,
       },
       orderBy: [desc(recipe.createdAt)],
     });
@@ -30,6 +33,17 @@ export async function GET() {
 // POST /api/recipes — Create a new recipe
 export async function POST(request: Request) {
   try {
+    const session = await auth.api.getSession({
+      headers: await headers()
+    });
+
+    if (!session) {
+      return Response.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const {
       title,
@@ -67,6 +81,7 @@ export async function POST(request: Request) {
           servings,
           imageUrl: imageUrl || null,
           tags: tags || [],
+          userId: session.user.id,
         })
         .returning();
 
@@ -111,6 +126,7 @@ export async function POST(request: Request) {
         steps: {
           orderBy: (steps, { asc }) => [asc(steps.sortOrder)],
         },
+        user: true,
       },
     });
 
